@@ -615,8 +615,8 @@ uint64 Spell::GetSinglePossibleEnemy(uint32 i, float prange)
         r = GetProto()->custom_base_range_or_radius_sqr;
         if (u_caster != nullptr)
         {
-            SM_FFValue(u_caster->SM_FRadius, &r, GetProto()->SpellGroupType);
-            SM_PFValue(u_caster->SM_PRadius, &r, GetProto()->SpellGroupType);
+            if (Player* p = u_caster->GetSpellModOwner())
+                p->ApplySpellMod(GetProto()->Id, SPELLMOD_RADIUS, r, this);
         }
     }
     float srcx = m_caster->GetPositionX(), srcy = m_caster->GetPositionY(), srcz = m_caster->GetPositionZ();
@@ -669,8 +669,8 @@ uint64 Spell::GetSinglePossibleFriend(uint32 i, float prange)
         r = GetProto()->custom_base_range_or_radius_sqr;
         if (u_caster != nullptr)
         {
-            SM_FFValue(u_caster->SM_FRadius, &r, GetProto()->SpellGroupType);
-            SM_PFValue(u_caster->SM_PRadius, &r, GetProto()->SpellGroupType);
+            if (Player* p = u_caster->GetSpellModOwner())
+                p->ApplySpellMod(GetProto()->Id, SPELLMOD_RADIUS, r, this);
         }
     }
     float srcx = m_caster->GetPositionX(), srcy = m_caster->GetPositionY(), srcz = m_caster->GetPositionZ();
@@ -883,12 +883,14 @@ uint8 Spell::DidHit(uint32 effindex, Unit* target)
 
     if (GetProto()->Effect[effindex] == SPELL_EFFECT_DISPEL)
     {
-        SM_FFValue(u_victim->SM_FRezist_dispell, &resistchance, GetProto()->SpellGroupType);
-        SM_PFValue(u_victim->SM_PRezist_dispell, &resistchance, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_RESIST_DISPEL_CHANCE, resistchance, this);
     }
 
     float hitchance = 0;
-    SM_FFValue(u_caster->SM_FHitchance, &hitchance, GetProto()->SpellGroupType);
+    if (Player* p = u_caster->GetSpellModOwner())
+        p->ApplySpellMod(GetProto()->Id, SPELLMOD_RESIST_MISS_CHANCE, hitchance, this);
+
     resistchance -= hitchance;
 
     if (hasAttribute(ATTRIBUTES_IGNORE_INVULNERABILITY))
@@ -945,8 +947,8 @@ uint8 Spell::prepare(SpellCastTargets* targets)
 
         if (m_castTime && u_caster != nullptr)
         {
-            SM_FIValue(u_caster->SM_FCastTime, (int32*)&m_castTime, GetProto()->SpellGroupType);
-            SM_PIValue(u_caster->SM_PCastTime, (int32*)&m_castTime, GetProto()->SpellGroupType);
+            if (Player* p = u_caster->GetSpellModOwner())
+                p->ApplySpellMod(GetProto()->Id, SPELLMOD_CASTING_TIME, m_castTime, this);
         }
 
         // handle MOD_CAST_TIME
@@ -1132,6 +1134,11 @@ void Spell::cancel()
     }
 
     SendChannelUpdate(0);
+
+    if (m_caster->GetTypeId() == TYPEID_PLAYER)
+        static_cast<Player*>(m_caster)->RemoveSpellMods(this);
+
+    m_appliedMods.clear();
 
     //m_spellState = SPELL_STATE_FINISHED;
 
@@ -1613,7 +1620,9 @@ void Spell::AddTime(uint32 type)
         }
 
         float ch = 0;
-        SM_FFValue(u_caster->SM_PNonInterrupt, &ch, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_NOT_LOSE_CASTING_TIME, ch, this);
+
         if (Rand(ch))
             return;
 
@@ -2592,11 +2601,8 @@ bool Spell::HasPower()
     }
 
     //apply modifiers
-    if (u_caster != nullptr)
-    {
-        SM_FIValue(u_caster->SM_FCost, &cost, GetProto()->SpellGroupType);
-        SM_PIValue(u_caster->SM_PCost, &cost, GetProto()->SpellGroupType);
-    }
+    if (Player* p = u_caster->GetSpellModOwner())
+        p->ApplySpellMod(GetProto()->Id, SPELLMOD_COST, cost, this);
 
     if (cost <= 0)
         return true;
@@ -2748,8 +2754,8 @@ bool Spell::TakePower()
     //apply modifiers
     if (u_caster != nullptr)
     {
-        SM_FIValue(u_caster->SM_FCost, &cost, GetProto()->SpellGroupType);
-        SM_PIValue(u_caster->SM_PCost, &cost, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_COST, cost, this);
     }
 
     if (cost <= 0)
@@ -3071,8 +3077,8 @@ void Spell::HandleAddAura(uint64 guid)
     {
         if (u_caster != NULL)
         {
-            SM_FIValue(u_caster->SM_FCharges, &charges, aur->GetSpellProto()->SpellGroupType);
-            SM_PIValue(u_caster->SM_PCharges, &charges, aur->GetSpellProto()->SpellGroupType);
+            if (Player* p = u_caster->GetSpellModOwner())
+                p->ApplySpellMod(GetProto()->Id, SPELLMOD_CHARGES, charges, this);
         }
         for (int i = 0; i < (charges - 1); ++i)
         {
@@ -3914,16 +3920,8 @@ uint8 Spell::CanCast(bool tolerate)
      */
     if (u_caster != nullptr)
     {
-        SM_FFValue(u_caster->SM_FRange, &maxRange, GetProto()->SpellGroupType);
-        SM_PFValue(u_caster->SM_PRange, &maxRange, GetProto()->SpellGroupType);
-#ifdef COLLECTION_OF_UNTESTED_STUFF_AND_TESTERS
-        float spell_flat_modifers = 0;
-        float spell_pct_modifers = 0;
-        SM_FFValue(u_caster->SM_FRange, &spell_flat_modifers, GetProto()->SpellGroupType);
-        SM_FFValue(u_caster->SM_PRange, &spell_pct_modifers, GetProto()->SpellGroupType);
-        if (spell_flat_modifers != 0 || spell_pct_modifers != 0)
-            LOG_DEBUG("!!!!!spell range bonus mod flat %f , spell range bonus pct %f , spell range %f, spell group %u", spell_flat_modifers, spell_pct_modifers, maxRange, GetProto()->SpellGroupType);
-#endif
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_RANGE, maxRange, this);
     }
 
     // Targeted Location Checks (AoE spells)
@@ -4649,58 +4647,9 @@ exit:
         }
     }
 
-    ///\todo INHERIT ITEM MODS FROM REAL ITEM OWNER - BURLEX BUT DO IT PROPERLY
-
     if (u_caster != NULL)
     {
-        int32 spell_flat_modifers = 0;
-        int32 spell_pct_modifers = 100;
-
-        SM_FIValue(u_caster->SM_FMiscEffect, &spell_flat_modifers, GetProto()->SpellGroupType);
-        SM_PIValue(u_caster->SM_PMiscEffect, &spell_pct_modifers, GetProto()->SpellGroupType);
-
-        SM_FIValue(u_caster->SM_FEffectBonus, &spell_flat_modifers, GetProto()->SpellGroupType);
-        SM_PIValue(u_caster->SM_PEffectBonus, &spell_pct_modifers, GetProto()->SpellGroupType);
-
-        SM_FIValue(u_caster->SM_FDamageBonus, &spell_flat_modifers, GetProto()->SpellGroupType);
-        SM_PIValue(u_caster->SM_PDamageBonus, &spell_pct_modifers, GetProto()->SpellGroupType);
-
-        switch (i)
-        {
-            case 0:
-                SM_FIValue(u_caster->SM_FEffect1_Bonus, &spell_flat_modifers, GetProto()->SpellGroupType);
-                SM_PIValue(u_caster->SM_PEffect1_Bonus, &spell_pct_modifers, GetProto()->SpellGroupType);
-                break;
-            case 1:
-                SM_FIValue(u_caster->SM_FEffect2_Bonus, &spell_flat_modifers, GetProto()->SpellGroupType);
-                SM_PIValue(u_caster->SM_PEffect2_Bonus, &spell_pct_modifers, GetProto()->SpellGroupType);
-                break;
-            case 2:
-                SM_FIValue(u_caster->SM_FEffect3_Bonus, &spell_flat_modifers, GetProto()->SpellGroupType);
-                SM_PIValue(u_caster->SM_PEffect3_Bonus, &spell_pct_modifers, GetProto()->SpellGroupType);
-                break;
-        }
-
-        value = float2int32(value * (float)(spell_pct_modifers / 100.0f)) + spell_flat_modifers;
-    }
-    else if (i_caster != NULL && target != NULL)
-    {
-        //we should inherit the modifiers from the conjured food caster
-        Unit* item_creator = target->GetMapMgr()->GetUnit(i_caster->GetCreatorGUID());
-
-        if (item_creator != NULL)
-        {
-            int32 spell_flat_modifers = 0;
-            int32 spell_pct_modifers = 100;
-
-            SM_FIValue(item_creator->SM_FMiscEffect, &spell_flat_modifers, GetProto()->SpellGroupType);
-            SM_PIValue(item_creator->SM_PMiscEffect, &spell_pct_modifers, GetProto()->SpellGroupType);
-
-            SM_FIValue(item_creator->SM_FEffectBonus, &spell_flat_modifers, GetProto()->SpellGroupType);
-            SM_PIValue(item_creator->SM_PEffectBonus, &spell_pct_modifers, GetProto()->SpellGroupType);
-
-            value = float2int32(value * (float)(spell_pct_modifers / 100.0f)) + spell_flat_modifers;
-        }
+        u_caster->ApplyEffectModifiers(GetProto(), i, value);
     }
 
     return value;
@@ -4889,8 +4838,8 @@ int32 Spell::DoCalculateEffect(uint32 i, Unit* target, int32 value)
             value = value * (GetProto()->EffectBasePoints[i] + 1) / 100;
             if (p_caster != NULL)
             {
-                SM_FIValue(p_caster->SM_FMiscEffect, &value, GetProto()->SpellGroupType);
-                SM_PIValue(p_caster->SM_PMiscEffect, &value, GetProto()->SpellGroupType);
+                if (Player* p = u_caster->GetSpellModOwner())
+                    p->ApplySpellMod(GetProto()->Id, SPELLMOD_ALL_EFFECTS, value, this);
             }
             break;
         }
@@ -5185,14 +5134,11 @@ void Spell::Heal(int32 amount, bool ForceCrit)
         if (unitTarget->HasAurasWithNameHash(SPELL_HASH_SACRED_SHIELD) && m_spellInfo->custom_NameHash == SPELL_HASH_FLASH_OF_LIGHT)
             critchance += 50;
 
-
-        int penalty_pct = 0;
-        int penalty_flt = 0;
-        SM_FIValue(u_caster->SM_PPenalty, &penalty_pct, GetProto()->SpellGroupType);
-        bonus += amount * penalty_pct / 100;
-        SM_FIValue(u_caster->SM_FPenalty, &penalty_flt, GetProto()->SpellGroupType);
-        bonus += penalty_flt;
-        SM_FIValue(u_caster->SM_CriticalChance, &critchance, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+        {
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_BONUS_MULTIPLIER, bonus, this);
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_CRITICAL_CHANCE, critchance, this);
+        }
 
 
         if (p_caster != NULL)
@@ -5244,12 +5190,14 @@ void Spell::Heal(int32 amount, bool ForceCrit)
         amount += amount * (int32)(u_caster->HealDonePctMod[school]);
         amount += float2int32(amount * unitTarget->HealTakenPctMod[school]);
 
-        SM_PIValue(u_caster->SM_PDamageBonus, &amount, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_DAMAGE, amount, this);
 
         if (ForceCrit || ((critical = Rand(critchance)) != 0))
         {
             int32 critical_bonus = 100;
-            SM_FIValue(u_caster->SM_PCriticalDamage, &critical_bonus, GetProto()->SpellGroupType);
+            if (Player* p = u_caster->GetSpellModOwner())
+                p->ApplySpellMod(GetProto()->Id, SPELLMOD_CRIT_DAMAGE_BONUS, critical_bonus, this);
 
             if (critical_bonus > 0)
             {
@@ -5924,7 +5872,10 @@ uint32 Spell::GetTargetType(uint32 value, uint32 i)
     //CHAIN SPELLS ALWAYS CHAIN!
     uint32 jumps = m_spellInfo->EffectChainTarget[i];
     if (u_caster != NULL)
-        SM_FIValue(u_caster->SM_FAdditionalTargets, (int32*)&jumps, m_spellInfo->SpellGroupType);
+    {
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_JUMP_TARGETS, jumps, this);
+    }
     if (jumps != 0)
         type |= SPELL_TARGET_AREA_CHAIN;
 

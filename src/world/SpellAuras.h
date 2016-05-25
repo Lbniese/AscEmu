@@ -630,8 +630,6 @@ class SERVER_DECL Aura : public EventableObject
         void SpellAuraWaterWalk(bool apply);
         void SpellAuraFeatherFall(bool apply);
         void SpellAuraHover(bool apply);
-        void SpellAuraAddFlatModifier(bool apply);
-        void SpellAuraAddPctMod(bool apply);
         void SpellAuraAddClassTargetTrigger(bool apply);
         void SpellAuraModPowerRegPerc(bool apply);
         void SpellAuraOverrideClassScripts(bool apply);
@@ -753,8 +751,8 @@ class SERVER_DECL Aura : public EventableObject
         void SpellAuraCallStabledPet(bool apply);
         void SpellAuraConvertRune(bool apply);
         void UpdateAuraModDecreaseSpeed();
+        void ApplySpellMod(bool apply);
 
-        void SendModifierLog(int32** m, int32 v, uint32* mask, uint8 type, bool pct = false);
         void SendDummyModifierLog(std::map<SpellEntry*, uint32> * m, SpellEntry* spellInfo, uint32 i, bool apply, bool pct = false);
 
         // Events

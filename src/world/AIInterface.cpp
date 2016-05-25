@@ -3286,8 +3286,8 @@ uint32 AIInterface::_CalcThreat(uint32 damage, SpellEntry* sp, Unit* Attacker)
 
     if (sp != nullptr)
     {
-        SM_FIValue(Attacker->SM_FThreat, &mod, sp->SpellGroupType);
-        SM_PIValue(Attacker->SM_PThreat, &mod, sp->SpellGroupType);
+        if (Player* p = Attacker->GetSpellModOwner())
+            p->ApplySpellMod(sp->Id, SPELLMOD_THREAT, mod);
     }
 
     if (Attacker->getClass() == ROGUE)

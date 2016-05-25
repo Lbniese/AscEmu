@@ -341,6 +341,7 @@ typedef std::map<uint32, OnHitSpell >               StrikeSpellDmgMap;
 typedef std::map<uint32, PlayerSkill>               SkillMap;
 typedef std::set<Player**>                          ReferenceSet;
 typedef std::map<uint32, PlayerCooldown>            PlayerCooldownMap;
+typedef std::list<SpellModifier*>                   SpellModList;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /// Class that holds every created character on the server.
@@ -1725,7 +1726,6 @@ class SERVER_DECL Player : public Unit
         void Gossip_SendPOI(float X, float Y, uint32 Icon, uint32 Flags, uint32 Data, const char* Name);
         void Gossip_SendSQLPOI(uint32 id);
         void SendSpellCooldownEvent(uint32 SpellId);
-        void SendSpellModifier(uint8 spellgroup, uint8 spelltype, int32 v, bool is_pct);
         void SendItemPushResult(bool created, bool recieved, bool sendtoset, bool newitem,  uint8 destbagslot, uint32 destslot, uint32 count, uint32 entry, uint32 suffix, uint32 randomprop, uint32 stack);
         void SendSetProficiency(uint8 ItemClass, uint32 Proficiency);
         void SendLoginVerifyWorld(uint32 MapId, float X, float Y, float Z, float O);
@@ -2003,6 +2003,7 @@ class SERVER_DECL Player : public Unit
         uint8 m_talentActiveSpec;
 
         PlayerSpec m_specs[MAX_SPEC_COUNT];
+        SpellModList m_spellMods[MAX_SPELLMOD];
 
         uint8 m_roles;
 		uint32 GroupUpdateFlags;
@@ -2015,6 +2016,16 @@ class SERVER_DECL Player : public Unit
         bool CanTrainAt(Trainer*);
 
         Object* GetPlayerOwner() { return this; };
+        //Spell Mods
+        void AddSpellMod(SpellModifier* mod, bool apply);
+        bool IsAffectedBySpellmod(SpellEntry* spellInfo, SpellModifier* mod, Spell* spell = nullptr);
+        template <class T> T ApplySpellMod(uint32 spellId, SpellModOp op, T &basevalue, Spell* spell = nullptr);
+        void RemoveSpellMods(Spell* spell);
+        void RestoreSpellMods(Spell* spell, uint32 ownerAuraId = 0, Aura* aura = nullptr);
+        void RestoreAllSpellMods(uint32 ownerAuraId = 0, Aura* aura = nullptr);
+        void DropModCharge(SpellModifier* mod, Spell* spell);
+        void SetSpellModTakingSpell(Spell* spell, bool apply);
+        Spell* m_spellModTakingSpell;
 
         void SetRoles(uint8 role) { m_roles = role; }
 		uint8 GetRoles() { return m_roles; }
@@ -2035,6 +2046,51 @@ class SERVER_DECL Player : public Unit
 
         void SetMover(Unit* target);
 };
+
+template <class T> T Player::ApplySpellMod(uint32 spellId, SpellModOp op, T &basevalue, Spell* spell)
+{
+    SpellEntry * spellInfo = dbcSpell.LookupEntry(spellId);
+    if (!spellInfo)
+        return 0;
+    float totalmul = 1.0f;
+    int32 totalflat = 0;
+
+    // Drop charges for triggering spells instead of triggered ones
+    if (m_spellModTakingSpell)
+        spell = m_spellModTakingSpell;
+
+    for (SpellModList::iterator itr = m_spellMods[op].begin(); itr != m_spellMods[op].end(); ++itr)
+    {
+        SpellModifier* mod = *itr;
+
+        // Charges can be set only for mods with auras
+        if (!mod->ownerAura)
+            ASSERT(mod->charges == 0);
+
+        if (!IsAffectedBySpellmod(spellInfo, mod, spell))
+            continue;
+
+        if (mod->type == SPELLMOD_FLAT)
+            totalflat += mod->value;
+        else if (mod->type == SPELLMOD_PCT)
+        {
+            // skip percent mods for null basevalue (most important for spell mods with charges)
+            if (basevalue == T(0))
+                continue;
+
+            // special case (skip > 10sec spell casts for instant cast setting)
+            if (mod->op == SPELLMOD_CASTING_TIME && basevalue >= T(10000) && mod->value <= -100)
+                continue;
+
+            totalmul += (1.0f * float(mod->value) / 100.0f);
+        }
+
+        DropModCharge(mod, spell);
+    }
+    float diff = (float)basevalue * (totalmul - 1.0f) + (float)totalflat;
+    basevalue = T((float)basevalue + diff);
+    return T(diff);
+}
 
 class SkillIterator
 {

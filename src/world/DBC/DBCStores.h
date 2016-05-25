@@ -544,7 +544,7 @@ struct SpellEntry
     uint32 StartRecoveryTime;                                 // 206
     uint32 MaxTargetLevel;                                    // 207
     uint32 SpellFamilyName;                                   // 208
-    uint32 SpellGroupType[MAX_SPELL_EFFECTS];                 // 209 - 211
+    flag96 SpellGroupType;	                                  // 209 - 211
     uint32 MaxTargets;                                        // 212
     uint32 Spell_Dmg_Type;                                    // 213
     uint32 PreventionType;                                    // 214
@@ -696,6 +696,11 @@ struct SpellEntry
         }
 
         return 0;
+    }
+
+    bool IsAffectedBySpellMods()
+    {
+        return !(AttributesExC & 0x20000000);
     }
 
     SpellEntry()
@@ -857,6 +862,21 @@ inline uint32 GetDuration(DBC::Structures::SpellDurationEntry const* dur)
     if (dur == nullptr)
         return 0;
     return dur->Duration1;
+}
+
+inline bool IsAffectedBySpellMod(SpellEntry* sp, SpellEntry* sp2, flag96 mask)
+{
+    if (!sp->IsAffectedBySpellMods())
+        return false;
+
+    // False if affect_spell == NULL or spellFamily not equal
+    if (!sp2 || sp2->SpellFamilyName != sp->SpellFamilyName)
+        return false;
+    // true
+    if (mask & sp->SpellGroupType)
+        return true;
+
+    return false;
 }
 
 #define SAFE_DBC_CODE_RETURNS       /// undefine this to make out of range/nulls return null. */

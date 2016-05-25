@@ -239,6 +239,9 @@ void Spell::AddChainTargets(uint32 i, uint32 TargetType, float r, uint32 maxtarg
 
     //is this party only?
     Player* casterFrom = static_cast< Player* >(u_caster->GetPlayerOwner());
+    if (casterFrom != nullptr)
+        casterFrom->ApplySpellMod(m_spellInfo->Id, SPELLMOD_RANGE, range, nullptr);
+
     Player* pfirstTargetFrom = static_cast< Player* >(firstTarget->GetPlayerOwner());
     if (casterFrom != NULL && pfirstTargetFrom != NULL && casterFrom->GetGroup() == pfirstTargetFrom->GetGroup())
         RaidOnly = true;
@@ -248,7 +251,8 @@ void Spell::AddChainTargets(uint32 i, uint32 TargetType, float r, uint32 maxtarg
     //range
     range /= jumps; //hacky, needs better implementation!
 
-    SM_FIValue(u_caster->SM_FAdditionalTargets, (int32*)&jumps, m_spellInfo->SpellGroupType);
+    if (Player* p = u_caster->GetSpellModOwner())
+        p->ApplySpellMod(m_spellInfo->Id, SPELLMOD_JUMP_TARGETS, jumps);
 
     AddTarget(i, TargetType, firstTarget);
 

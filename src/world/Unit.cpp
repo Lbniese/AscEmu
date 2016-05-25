@@ -158,78 +158,6 @@ Unit::Unit() : m_movementManager()
         ModDamageTakenByMechPCT[i] = 0;
     }
 
-    //SM
-    SM_FDamageBonus = 0;
-    SM_PDamageBonus = 0;
-
-    SM_FDur = 0;
-    SM_PDur = 0;
-
-    SM_FThreat = 0;
-    SM_PThreat = 0;
-
-    SM_FEffect1_Bonus = 0;
-    SM_PEffect1_Bonus = 0;
-
-    SM_FCharges = 0;
-    SM_PCharges = 0;
-
-    SM_FRange = 0;
-    SM_PRange = 0;
-
-    SM_FRadius = 0;
-    SM_PRadius = 0;
-
-    SM_CriticalChance = 0;
-
-    SM_FMiscEffect = 0;
-    SM_PMiscEffect = 0;
-
-    SM_PNonInterrupt = 0;
-
-    SM_FCastTime = 0;
-    SM_PCastTime = 0;
-
-    SM_FCooldownTime = 0;
-    SM_PCooldownTime = 0;
-
-    SM_FEffect2_Bonus = 0;
-    SM_PEffect2_Bonus = 0;
-
-    SM_FCost = 0;
-    SM_PCost = 0;
-
-    SM_PCriticalDamage = 0;
-
-    SM_FHitchance = 0;
-
-    SM_FAdditionalTargets = 0;
-
-    SM_FChanceOfSuccess = 0;
-
-    SM_FAmptitude = 0;
-    SM_PAmptitude = 0;
-
-    SM_PJumpReduce = 0;
-
-    SM_FGlobalCooldown = 0;
-    SM_PGlobalCooldown = 0;
-
-    SM_FDOT = 0;
-    SM_PDOT = 0;
-
-    SM_FEffect3_Bonus = 0;
-    SM_PEffect3_Bonus = 0;
-
-    SM_FPenalty = 0;
-    SM_PPenalty = 0;
-
-    SM_FEffectBonus = 0;
-    SM_PEffectBonus = 0;
-
-    SM_FRezist_dispell = 0;
-    SM_PRezist_dispell = 0;
-
     m_pacified = 0;
     m_interruptRegen = 0;
     m_resistChance = 0;
@@ -423,276 +351,6 @@ Unit::~Unit()
 {
     //start to remove badptrs, if you delete from the heap null the ptr's damn!
     RemoveAllAuras();
-
-    if (SM_CriticalChance != NULL)
-    {
-        delete[] SM_CriticalChance;
-        SM_CriticalChance = NULL;
-    }
-
-    if (SM_FDur != NULL)
-    {
-        delete[] SM_FDur;
-        SM_FDur = NULL;
-    }
-
-    if (SM_PDur != NULL)
-    {
-        delete[] SM_PDur;
-        SM_PDur = NULL;
-    }
-
-    if (SM_FRadius != NULL)
-    {
-        delete[] SM_FRadius;
-        SM_FRadius = NULL;
-    }
-
-    if (SM_FRange != NULL)
-    {
-        delete[] SM_FRange;
-        SM_FRange = NULL;
-    }
-
-    if (SM_PCastTime != NULL)
-    {
-        delete[] SM_PCastTime;
-        SM_PCastTime = NULL;
-    }
-
-    if (SM_FCastTime != NULL)
-    {
-        delete[] SM_FCastTime;
-        SM_FCastTime = NULL;
-    }
-
-    if (SM_PCriticalDamage != NULL)
-    {
-        delete[] SM_PCriticalDamage;
-        SM_PCriticalDamage = NULL;
-    }
-
-    if (SM_FDOT != NULL)
-    {
-        delete[] SM_FDOT;
-        SM_FDOT = NULL;
-    }
-
-    if (SM_PDOT != NULL)
-    {
-        delete[] SM_PDOT;
-        SM_PDOT = NULL;
-    }
-
-    if (SM_FEffect1_Bonus != NULL)
-    {
-        delete[] SM_FEffect1_Bonus;
-        SM_FEffect1_Bonus = NULL;
-    }
-
-    if (SM_PEffect1_Bonus != NULL)
-    {
-        delete[] SM_PEffect1_Bonus;
-        SM_PEffect1_Bonus = NULL;
-    }
-
-    if (SM_FEffect2_Bonus != NULL)
-    {
-        delete[] SM_FEffect2_Bonus;
-        SM_FEffect2_Bonus = NULL;
-    }
-
-    if (SM_PEffect2_Bonus != NULL)
-    {
-        delete[] SM_PEffect2_Bonus;
-        SM_PEffect2_Bonus = NULL;
-    }
-
-    if (SM_FEffect3_Bonus != NULL)
-    {
-        delete[] SM_FEffect3_Bonus;
-        SM_FEffect3_Bonus = NULL;
-    }
-
-    if (SM_PEffect3_Bonus != NULL)
-    {
-        delete[] SM_PEffect3_Bonus;
-        SM_PEffect3_Bonus = NULL;
-    }
-
-    if (SM_PEffectBonus != NULL)
-    {
-        delete[] SM_PEffectBonus;
-        SM_PEffectBonus = NULL;
-    }
-
-    if (SM_FEffectBonus != NULL)
-    {
-        delete[] SM_FEffectBonus;
-        SM_FEffectBonus = NULL;
-    }
-
-    if (SM_FDamageBonus != NULL)
-    {
-        delete[] SM_FDamageBonus;
-        SM_FDamageBonus = NULL;
-    }
-
-    if (SM_PDamageBonus != NULL)
-    {
-        delete[] SM_PDamageBonus;
-        SM_PDamageBonus = NULL;
-    }
-
-    if (SM_PMiscEffect != NULL)
-    {
-        delete[] SM_PMiscEffect;
-        SM_PMiscEffect = NULL;
-    }
-
-    if (SM_FMiscEffect != NULL)
-    {
-        delete[] SM_FMiscEffect;
-        SM_FMiscEffect = NULL;
-    }
-
-    if (SM_FHitchance != NULL)
-    {
-        delete[] SM_FHitchance;
-        SM_FHitchance = NULL;
-    }
-
-    if (SM_PRange != NULL)
-    {
-        delete[] SM_PRange;
-        SM_PRange = NULL;
-    }
-
-    if (SM_PRadius != NULL)
-    {
-        delete[] SM_PRadius;
-        SM_PRadius = NULL;
-    }
-
-    if (SM_PCost != NULL)
-    {
-        delete[] SM_PCost;
-        SM_PCost = NULL;
-    }
-
-    if (SM_FCost != NULL)
-    {
-        delete[] SM_FCost;
-        SM_FCost = NULL;
-    }
-
-    if (SM_FAdditionalTargets != NULL)
-    {
-        delete[] SM_FAdditionalTargets;
-        SM_FAdditionalTargets = NULL;
-    }
-
-    if (SM_PJumpReduce != NULL)
-    {
-        delete[] SM_PJumpReduce;
-        SM_PJumpReduce = NULL;
-    }
-
-    if (SM_FGlobalCooldown != NULL)
-    {
-        delete[] SM_FGlobalCooldown;
-        SM_FGlobalCooldown = NULL;
-    }
-
-    if (SM_PGlobalCooldown != NULL)
-    {
-        delete[] SM_PGlobalCooldown;
-        SM_PGlobalCooldown = NULL;
-    }
-
-    if (SM_PNonInterrupt != NULL)
-    {
-        delete[] SM_PNonInterrupt;
-        SM_PNonInterrupt = NULL;
-    }
-
-    if (SM_FPenalty != NULL)
-    {
-        delete[] SM_FPenalty;
-        SM_FPenalty = NULL;
-    }
-
-    if (SM_PPenalty != NULL)
-    {
-        delete[] SM_PPenalty;
-        SM_PPenalty = NULL;
-    }
-
-    if (SM_FCooldownTime != NULL)
-    {
-        delete[] SM_FCooldownTime;
-        SM_FCooldownTime = NULL;
-    }
-
-    if (SM_PCooldownTime != NULL)
-    {
-        delete[] SM_PCooldownTime;
-        SM_PCooldownTime = NULL;
-    }
-
-    if (SM_FChanceOfSuccess != NULL)
-    {
-        delete[] SM_FChanceOfSuccess;
-        SM_FChanceOfSuccess = NULL;
-    }
-
-    if (SM_FAmptitude != NULL)
-    {
-        delete[] SM_FAmptitude;
-        SM_FAmptitude = NULL;
-    }
-
-    if (SM_PAmptitude != NULL)
-    {
-        delete[] SM_PAmptitude;
-        SM_PAmptitude = NULL;
-    }
-
-    if (SM_FRezist_dispell != NULL)
-    {
-        delete[] SM_FRezist_dispell;
-        SM_FRezist_dispell = NULL;
-    }
-
-    if (SM_PRezist_dispell != NULL)
-    {
-        delete[] SM_PRezist_dispell;
-        SM_PRezist_dispell = NULL;
-    }
-
-    if (SM_FCharges != NULL)
-    {
-        delete[] SM_FCharges;
-        SM_FCharges = NULL;
-    }
-
-    if (SM_PCharges != NULL)
-    {
-        delete[] SM_PCharges;
-        SM_PCharges = NULL;
-    }
-
-    if (SM_FThreat != NULL)
-    {
-        delete[] SM_FThreat;
-        SM_FThreat = NULL;
-    }
-
-    if (SM_PThreat != NULL)
-    {
-        delete[] SM_PThreat;
-        SM_PThreat = NULL;
-    }
 
     delete m_aiInterface;
     m_aiInterface = NULL;
@@ -1136,7 +794,9 @@ uint32 Unit::HandleProc(uint32 flag, Unit* victim, SpellEntry* CastingSpell, boo
             }
         }
 
-        SM_FIValue(SM_FChanceOfSuccess, (int32*)&proc_Chance, ospinfo->SpellGroupType);
+        if (Player* p = GetSpellModOwner())
+            p->ApplySpellMod(spe->Id, SPELLMOD_CHANCE_OF_SUCCESS, proc_Chance);
+
         if (!Rand(proc_Chance))
             continue;
 
@@ -2996,13 +2656,8 @@ uint32 Unit::GetSpellDidHitResult(Unit* pVictim, uint32 weapon_damage_type, Spel
 
     if (ability != nullptr)
     {
-        SM_FFValue(SM_FHitchance, &hitchance, ability->SpellGroupType);
-#ifdef COLLECTION_OF_UNTESTED_STUFF_AND_TESTERS
-        float spell_flat_modifers = 0;
-        SM_FFValue(SM_FHitchance, &spell_flat_modifers, ability->SpellGroupType);
-        if (spell_flat_modifers != 0)
-            LOG_DEBUG("!!!!!spell resist mod flat %f,  spell resist bonus %f, spell group %u", spell_flat_modifers, hitchance, ability->SpellGroupType);
-#endif
+        if (Player* p = GetSpellModOwner())
+            p->ApplySpellMod(ability->Id, SPELLMOD_RESIST_MISS_CHANCE, hitchance);
     }
 
     if (ability && ability->Attributes & ATTRIBUTES_CANT_BE_DPB)
@@ -3327,8 +2982,11 @@ void Unit::Strike(Unit* pVictim, uint32 weapon_damage_type, SpellEntry* ability,
 
     if (ability != nullptr)
     {
-        SM_FFValue(SM_CriticalChance, &crit, ability->SpellGroupType);
-        SM_FFValue(SM_FHitchance, &hitchance, ability->SpellGroupType);
+        if (Player* p = GetSpellModOwner())
+        {
+            p->ApplySpellMod(ability->Id, SPELLMOD_CRITICAL_CHANCE, crit);
+            p->ApplySpellMod(ability->Id, SPELLMOD_RESIST_MISS_CHANCE, hitchance);
+        }
     }
 
     // by ratings
@@ -3583,18 +3241,6 @@ void Unit::Strike(Unit* pVictim, uint32 weapon_damage_type, SpellEntry* ability,
 
                 dmg.full_damage += add_damage;
 
-                // \todo Don't really know why it was here. It should be calculated on Spel::CalculateEffect. Maybe it was bugged there...
-                //			if (ability && ability->SpellGroupType)
-                //			{
-                //				SM_FIValue(TO_UNIT(this)->SM_FDamageBonus, &dmg.full_damage, ability->SpellGroupType);
-                //				SM_PIValue(TO_UNIT(this)->SM_PDamageBonus, &dmg.full_damage, ability->SpellGroupType);
-                //			}
-                //			else
-                //			{
-                //				SM_FIValue(((Unit*)this)->SM_FMiscEffect,&dmg.full_damage,(uint64)1<<63);
-                //				SM_PIValue(((Unit*)this)->SM_PMiscEffect,&dmg.full_damage,(uint64)1<<63);
-                //			}
-
                 dmg.full_damage += pVictim->DamageTakenMod[dmg.school_type];
                 if (weapon_damage_type == RANGED)
                 {
@@ -3702,7 +3348,9 @@ void Unit::Strike(Unit* pVictim, uint32 weapon_damage_type, SpellEntry* ability,
                         if (ability != nullptr)
                         {
                             int32 dmg_bonus_pct = 100;
-                            SM_FIValue(SM_PCriticalDamage, &dmg_bonus_pct, ability->SpellGroupType);
+                            if (Player* p = GetSpellModOwner())
+                                p->ApplySpellMod(ability->Id, SPELLMOD_CRIT_DAMAGE_BONUS, dmg_bonus_pct);
+
                             dmgbonus = dmgbonus * dmg_bonus_pct / 100;
                         }
 
@@ -4270,7 +3918,7 @@ uint8 Unit::FindVisualSlot(uint32 SpellId, bool IsPos)
 
 void Unit::AddAura(Aura* aur)
 {
-    if (aur == NULL)
+    if (aur == nullptr)
         return;
 
     if (!(isAlive() || (aur->GetSpellProto()->AttributesExC & CAN_PERSIST_AND_CASTED_WHILE_DEAD)))
@@ -4354,8 +4002,8 @@ void Unit::AddAura(Aura* aur)
                 Unit* ucaster = aur->GetUnitCaster();
                 if (ucaster != nullptr)
                 {
-                    SM_FIValue(ucaster->SM_FCharges, &charges, aur->GetSpellProto()->SpellGroupType);
-                    SM_PIValue(ucaster->SM_PCharges, &charges, aur->GetSpellProto()->SpellGroupType);
+                    if (Player* p = GetSpellModOwner())
+                        p->ApplySpellMod(aur->GetSpellProto()->Id, SPELLMOD_CHARGES, charges);
                 }
                 maxStack = charges;
             }
@@ -5180,7 +4828,8 @@ int32 Unit::GetSpellDmgBonus(Unit* pVictim, SpellEntry* spellInfo, int32 base_dm
                 if (caster->IsPlayer())
                 {
                     int32 durmod = 0;
-                    SM_FIValue(caster->SM_FDur, &durmod, spellInfo->SpellGroupType);
+                    if (Player* p = GetSpellModOwner())
+                        p->ApplySpellMod(spellInfo->Id, SPELLMOD_DURATION, durmod);
                     plus_damage += static_cast<float>(plus_damage * durmod / 15000);
                 }
             }
@@ -5205,12 +4854,13 @@ int32 Unit::GetSpellDmgBonus(Unit* pVictim, SpellEntry* spellInfo, int32 base_dm
 
 
         int32 bonus_damage = 0;
-        SM_FIValue(caster->SM_FPenalty, &bonus_damage, spellInfo->SpellGroupType);
-        SM_FIValue(caster->SM_FDamageBonus, &bonus_damage, spellInfo->SpellGroupType);
-
         int32 dmg_bonus_pct = 0;
-        SM_FIValue(caster->SM_PPenalty, &dmg_bonus_pct, spellInfo->SpellGroupType);
-        SM_FIValue(caster->SM_PDamageBonus, &dmg_bonus_pct, spellInfo->SpellGroupType);
+        
+        if (Player* p = GetSpellModOwner())
+        {
+            p->ApplySpellMod(spellInfo->Id, SPELLMOD_BONUS_MULTIPLIER, dmg_bonus_pct);
+            p->ApplySpellMod(spellInfo->Id, SPELLMOD_DAMAGE, bonus_damage);
+        }
 
         plus_damage += static_cast<float>((base_dmg + bonus_damage) * dmg_bonus_pct / 100);
 
@@ -5225,6 +4875,27 @@ float Unit::CalcSpellDamageReduction(Unit* victim, SpellEntry* spell, float res)
     reduced_damage += res * victim->DamageTakenPctMod[spell->School];
     reduced_damage += res * victim->ModDamageTakenByMechPCT[spell->MechanicsType];
     return reduced_damage;
+}
+
+float Unit::ApplyEffectModifiers(SpellEntry* sp, uint8 effect_index, float value)
+{
+    if (Player* modOwner = GetSpellModOwner())
+    {
+        modOwner->ApplySpellMod(sp->Id, SPELLMOD_ALL_EFFECTS, value);
+        switch (effect_index)
+        {
+            case 0:
+                modOwner->ApplySpellMod(sp->Id, SPELLMOD_EFFECT1, value);
+                break;
+            case 1:
+                modOwner->ApplySpellMod(sp->Id, SPELLMOD_EFFECT2, value);
+                break;
+            case 2:
+                modOwner->ApplySpellMod(sp->Id, SPELLMOD_EFFECT3, value);
+                break;
+        }
+    }
+ 	return value;
 }
 
 void Unit::InterruptSpell()
@@ -5400,7 +5071,7 @@ uint32 Unit::ManaShieldAbsorb(uint32 dmg)
     //mana shield group->16. the only
 
     uint32 mana = GetPower(POWER_TYPE_MANA);
-    int32 effectbonus = SM_PEffectBonus ? SM_PEffectBonus[16] : 0;
+    int32 effectbonus = 0;
 
     int32 potential = (mana * 50) / ((100 + effectbonus));
     if (potential > m_manashieldamt)
@@ -6961,289 +6632,6 @@ void Unit::Energize(Unit* target, uint32 SpellId, uint32 amount, uint32 type)
     Spell::SendHealManaSpellOnPlayer(this, target, amount, type, SpellId);
 }
 
-void Unit::InheritSMMods(Unit* inherit_from)
-{
-    if (inherit_from == NULL)
-        return;
-
-    if (inherit_from->SM_CriticalChance)
-    {
-        if (SM_CriticalChance == 0)
-            SM_CriticalChance = new int32[SPELL_GROUPS];
-        memcpy(SM_CriticalChance, inherit_from->SM_CriticalChance, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FDur)
-    {
-        if (SM_FDur == 0)
-            SM_FDur = new int32[SPELL_GROUPS];
-        memcpy(SM_FDur, inherit_from->SM_FDur, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PDur)
-    {
-        if (SM_PDur == 0)
-            SM_PDur = new int32[SPELL_GROUPS];
-        memcpy(SM_PDur, inherit_from->SM_PDur, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PRadius)
-    {
-        if (SM_PRadius == 0)
-            SM_PRadius = new int32[SPELL_GROUPS];
-        memcpy(SM_PRadius, inherit_from->SM_PRadius, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FRadius)
-    {
-        if (SM_FRadius == 0)
-            SM_FRadius = new int32[SPELL_GROUPS];
-        memcpy(SM_FRadius, inherit_from->SM_FRadius, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FRange)
-    {
-        if (SM_FRange == 0)
-            SM_FRange = new int32[SPELL_GROUPS];
-        memcpy(SM_FRange, inherit_from->SM_FRange, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PCastTime)
-    {
-        if (SM_PCastTime == 0)
-            SM_PCastTime = new int32[SPELL_GROUPS];
-        memcpy(SM_PCastTime, inherit_from->SM_PCastTime, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FCastTime)
-    {
-        if (SM_FCastTime == 0)
-            SM_FCastTime = new int32[SPELL_GROUPS];
-        memcpy(SM_FCastTime, inherit_from->SM_FCastTime, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PCriticalDamage)
-    {
-        if (SM_PCriticalDamage == 0)
-            SM_PCriticalDamage = new int32[SPELL_GROUPS];
-        memcpy(SM_PCriticalDamage, inherit_from->SM_PCriticalDamage, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FDOT)
-    {
-        if (SM_FDOT == 0)
-            SM_FDOT = new int32[SPELL_GROUPS];
-        memcpy(SM_FDOT, inherit_from->SM_FDOT, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PDOT)
-    {
-        if (SM_PDOT == 0)
-            SM_PDOT = new int32[SPELL_GROUPS];
-        memcpy(SM_PDOT, inherit_from->SM_PDOT, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FEffect1_Bonus)
-    {
-        if (SM_FEffect1_Bonus == 0)
-            SM_FEffect1_Bonus = new int32[SPELL_GROUPS];
-        memcpy(SM_FEffect1_Bonus, inherit_from->SM_FEffect1_Bonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PEffect1_Bonus)
-    {
-        if (SM_PEffect1_Bonus == 0)
-            SM_PEffect1_Bonus = new int32[SPELL_GROUPS];
-        memcpy(SM_PEffect1_Bonus, inherit_from->SM_PEffect1_Bonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FEffect2_Bonus)
-    {
-        if (SM_FEffect2_Bonus == 0)
-            SM_FEffect2_Bonus = new int32[SPELL_GROUPS];
-        memcpy(SM_FEffect2_Bonus, inherit_from->SM_FEffect2_Bonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PEffect2_Bonus)
-    {
-        if (SM_PEffect2_Bonus == 0)
-            SM_PEffect2_Bonus = new int32[SPELL_GROUPS];
-        memcpy(SM_PEffect2_Bonus, inherit_from->SM_PEffect2_Bonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FEffect3_Bonus)
-    {
-        if (SM_FEffect3_Bonus == 0)
-            SM_FEffect3_Bonus = new int32[SPELL_GROUPS];
-        memcpy(SM_FEffect3_Bonus, inherit_from->SM_FEffect3_Bonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PEffect3_Bonus)
-    {
-        if (SM_PEffect3_Bonus == 0)
-            SM_PEffect3_Bonus = new int32[SPELL_GROUPS];
-        memcpy(SM_PEffect3_Bonus, inherit_from->SM_PEffect3_Bonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FEffectBonus)
-    {
-        if (SM_FEffectBonus == 0)
-            SM_FEffectBonus = new int32[SPELL_GROUPS];
-        memcpy(SM_FEffectBonus, inherit_from->SM_FEffectBonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PEffectBonus)
-    {
-        if (SM_PEffectBonus == 0)
-            SM_PEffectBonus = new int32[SPELL_GROUPS];
-        memcpy(SM_PEffectBonus, inherit_from->SM_PEffectBonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FDamageBonus)
-    {
-        if (SM_FDamageBonus == 0)
-            SM_FDamageBonus = new int32[SPELL_GROUPS];
-        memcpy(SM_FDamageBonus, inherit_from->SM_FDamageBonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PDamageBonus)
-    {
-        if (SM_PDamageBonus == 0)
-            SM_PDamageBonus = new int32[SPELL_GROUPS];
-        memcpy(SM_PDamageBonus, inherit_from->SM_PDamageBonus, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PMiscEffect)
-    {
-        if (SM_PMiscEffect == 0)
-            SM_PMiscEffect = new int32[SPELL_GROUPS];
-        memcpy(SM_PMiscEffect, inherit_from->SM_PMiscEffect, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FMiscEffect)
-    {
-        if (SM_FMiscEffect == 0)
-            SM_FMiscEffect = new int32[SPELL_GROUPS];
-        memcpy(SM_FMiscEffect, inherit_from->SM_FMiscEffect, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FHitchance)
-    {
-        if (SM_FHitchance == 0)
-            SM_FHitchance = new int32[SPELL_GROUPS];
-        memcpy(SM_FHitchance, inherit_from->SM_FHitchance, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PRange)
-    {
-        if (SM_PRange == 0)
-            SM_PRange = new int32[SPELL_GROUPS];
-        memcpy(SM_PRange, inherit_from->SM_PRange, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PRadius)
-    {
-        if (SM_PRadius == 0)
-            SM_PRadius = new int32[SPELL_GROUPS];
-        memcpy(SM_PRadius, inherit_from->SM_PRadius, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PCost)
-    {
-        if (SM_PCost == 0)
-            SM_PCost = new int32[SPELL_GROUPS];
-        memcpy(SM_PCost, inherit_from->SM_PCost, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FCost)
-    {
-        if (SM_FCost == 0)
-            SM_FCost = new int32[SPELL_GROUPS];
-        memcpy(SM_FCost, inherit_from->SM_FCost, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FAdditionalTargets)
-    {
-        if (SM_FAdditionalTargets == 0)
-            SM_FAdditionalTargets = new int32[SPELL_GROUPS];
-        memcpy(SM_FAdditionalTargets, inherit_from->SM_FAdditionalTargets, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PJumpReduce)
-    {
-        if (SM_PJumpReduce == 0)
-            SM_PJumpReduce = new int32[SPELL_GROUPS];
-        memcpy(SM_PJumpReduce, inherit_from->SM_PJumpReduce, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FGlobalCooldown)
-    {
-        if (SM_FGlobalCooldown == 0)
-            SM_FGlobalCooldown = new int32[SPELL_GROUPS];
-        memcpy(SM_FGlobalCooldown, inherit_from->SM_FGlobalCooldown, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PGlobalCooldown)
-    {
-        if (SM_PGlobalCooldown == 0)
-            SM_PGlobalCooldown = new int32[SPELL_GROUPS];
-        memcpy(SM_PGlobalCooldown, inherit_from->SM_PGlobalCooldown, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PNonInterrupt)
-    {
-        if (SM_PNonInterrupt == 0)
-            SM_PNonInterrupt = new int32[SPELL_GROUPS];
-        memcpy(SM_PNonInterrupt, inherit_from->SM_PNonInterrupt, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FPenalty)
-    {
-        if (SM_FPenalty == 0)
-            SM_FPenalty = new int32[SPELL_GROUPS];
-        memcpy(SM_FPenalty, inherit_from->SM_FPenalty, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PPenalty)
-    {
-        if (SM_PPenalty == 0)
-            SM_PPenalty = new int32[SPELL_GROUPS];
-        memcpy(SM_PPenalty, inherit_from->SM_PPenalty, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FCooldownTime)
-    {
-        if (SM_FCooldownTime == 0)
-            SM_FCooldownTime = new int32[SPELL_GROUPS];
-        memcpy(SM_FCooldownTime, inherit_from->SM_FCooldownTime, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PCooldownTime)
-    {
-        if (SM_PCooldownTime == 0)
-            SM_PCooldownTime = new int32[SPELL_GROUPS];
-        memcpy(SM_PCooldownTime, inherit_from->SM_PCooldownTime, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FChanceOfSuccess)
-    {
-        if (SM_FChanceOfSuccess == 0)
-            SM_FChanceOfSuccess = new int32[SPELL_GROUPS];
-        memcpy(SM_FChanceOfSuccess, inherit_from->SM_FChanceOfSuccess, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FAmptitude)
-    {
-        if (SM_FAmptitude == 0)
-            SM_FAmptitude = new int32[SPELL_GROUPS];
-        memcpy(SM_FAmptitude, inherit_from->SM_FAmptitude, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PAmptitude)
-    {
-        if (SM_PAmptitude == 0)
-            SM_PAmptitude = new int32[SPELL_GROUPS];
-        memcpy(SM_PAmptitude, inherit_from->SM_PAmptitude, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FRezist_dispell)
-    {
-        if (SM_FRezist_dispell == 0)
-            SM_FRezist_dispell = new int32[SPELL_GROUPS];
-        memcpy(SM_FRezist_dispell, inherit_from->SM_FRezist_dispell, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PRezist_dispell)
-    {
-        if (SM_PRezist_dispell == 0)
-            SM_PRezist_dispell = new int32[SPELL_GROUPS];
-        memcpy(SM_PRezist_dispell, inherit_from->SM_PRezist_dispell, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FCharges)
-    {
-        if (SM_FCharges == 0)
-            SM_FCharges = new int32[SPELL_GROUPS];
-        memcpy(SM_FCharges, inherit_from->SM_FCharges, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PCharges)
-    {
-        if (SM_PCharges == 0)
-            SM_PCharges = new int32[SPELL_GROUPS];
-        memcpy(SM_PCharges, inherit_from->SM_PCharges, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_FThreat)
-    {
-        if (SM_FThreat == 0)
-            SM_FThreat = new int32[SPELL_GROUPS];
-        memcpy(SM_FThreat, inherit_from->SM_FThreat, sizeof(int)*SPELL_GROUPS);
-    }
-    if (inherit_from->SM_PThreat)
-    {
-        if (SM_PThreat == 0)
-            SM_PThreat = new int32[SPELL_GROUPS];
-        memcpy(SM_PThreat, inherit_from->SM_PThreat, sizeof(int)*SPELL_GROUPS);
-    }
-}
-
 void CombatStatusHandler::TryToClearAttackTargets()
 {
     AttackerMap::iterator i, i2;
@@ -8115,7 +7503,8 @@ bool Unit::IsCriticalDamageForSpell(Object* victim, SpellEntry* spell)
                 CritChance += static_cast<float>(static_cast<Player*>(this)->m_RootedCritChanceBonus);
         }
 
-        SM_FFValue(SM_CriticalChance, &CritChance, spell->SpellGroupType);
+        if (Player* p = GetSpellModOwner())
+            p->ApplySpellMod(spell->Id, SPELLMOD_CRITICAL_CHANCE, CritChance);
 
         if (victim->IsPlayer())
             resilience_type = PLAYER_RATING_MODIFIER_SPELL_CRIT_RESILIENCE;
@@ -8148,7 +7537,8 @@ bool Unit::IsCriticalDamageForSpell(Object* victim, SpellEntry* spell)
 float Unit::GetCriticalDamageBonusForSpell(Object* victim, SpellEntry* spell, float amount)
 {
     int32 critical_bonus = 100;
-    SM_FIValue(SM_PCriticalDamage, &critical_bonus, spell->SpellGroupType);
+    if (Player* p = GetSpellModOwner())
+        p->ApplySpellMod(spell->Id, SPELLMOD_CRIT_DAMAGE_BONUS, critical_bonus);
 
     if (critical_bonus > 0)
     {
@@ -8195,7 +7585,8 @@ bool Unit::IsCriticalHealForSpell(Object* victim, SpellEntry* spell)
     if (victim->IsUnit() && static_cast<Unit*>(victim)->HasAurasWithNameHash(SPELL_HASH_SACRED_SHIELD) && spell->custom_NameHash == SPELL_HASH_FLASH_OF_LIGHT)
         crit_chance += 50;
 
-    SM_FIValue(this->SM_CriticalChance, &crit_chance, spell->SpellGroupType);
+    if (Player* p = GetSpellModOwner())
+        p->ApplySpellMod(spell->Id, SPELLMOD_CRITICAL_CHANCE, crit_chance);
 
     return Rand(crit_chance);
 }
@@ -8203,7 +7594,8 @@ bool Unit::IsCriticalHealForSpell(Object* victim, SpellEntry* spell)
 float Unit::GetCriticalHealBonusForSpell(Object* victim, SpellEntry* spell, float amount)
 {
     int32 critical_bonus = 100;
-    SM_FIValue(this->SM_PCriticalDamage, &critical_bonus, spell->SpellGroupType);
+    if (Player* p = GetSpellModOwner())
+        p->ApplySpellMod(spell->Id, SPELLMOD_CRIT_DAMAGE_BONUS, critical_bonus);
 
     if (critical_bonus > 0)
     {
@@ -8692,4 +8084,16 @@ void Unit::UnPossess()
         sEventMgr.AddEvent(static_cast< Object* >(pTarget), &Object::Delete, 0, 1, 1, 0);
         return;
     }
+}
+
+Player* Unit::GetSpellModOwner()
+{
+    if (GetTypeId() == TYPEID_PLAYER)
+        return static_cast<Player*>(this);
+    if (IsPet() || IsTotem())
+    {
+        if (GetPlayerOwner() != nullptr)
+            return static_cast<Player*>(GetPlayerOwner());
+    }
+    return nullptr;
 }

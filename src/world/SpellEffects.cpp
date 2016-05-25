@@ -564,7 +564,8 @@ void Spell::SpellEffectSchoolDMG(uint32 i) // dmg school
             {
                 if (u_caster != nullptr)
                 {
-                    SM_FIValue(u_caster->SM_PJumpReduce, &reduce, GetProto()->SpellGroupType);
+                    if (Player* p = u_caster->GetSpellModOwner())
+                        p->ApplySpellMod(GetProto()->Id, SPELLMOD_DAMAGE_MULTIPLIER, reduce, this);
                 }
                 chaindamage += ((GetProto()->EffectBasePoints[i] + 51) * reduce / 100);
             }
@@ -582,7 +583,8 @@ void Spell::SpellEffectSchoolDMG(uint32 i) // dmg school
             {
                 if (u_caster != nullptr)
                 {
-                    SM_FIValue(u_caster->SM_PJumpReduce, &reduce, GetProto()->SpellGroupType);
+                    if (Player* p = u_caster->GetSpellModOwner())
+                        p->ApplySpellMod(GetProto()->Id, SPELLMOD_DAMAGE_MULTIPLIER, reduce, this);
                 }
                 chaindamage = chaindamage * reduce / 100;
             }
@@ -1558,8 +1560,6 @@ void Spell::SpellEffectHeal(uint32 i) // Heal
 {
     if (p_caster != NULL)
     {
-        // HACKY but with SM_FEffect2_bonus it doesnt work
-
         // Apply this only on targets, which have one of paladins auras
         if (unitTarget && (unitTarget->HasAurasWithNameHash(SPELL_HASH_DEVOTION_AURA) || unitTarget->HasAurasWithNameHash(SPELL_HASH_RETRIBUTION_AURA) ||
             unitTarget->HasAurasWithNameHash(SPELL_HASH_CONCENTRATION_AURA) || unitTarget->HasAurasWithNameHash(SPELL_HASH_CRUSADER_AURA) || unitTarget->HasAurasWithNameHash(SPELL_HASH_FIRE_RESISTANCE_AURA) ||
@@ -1589,7 +1589,8 @@ void Spell::SpellEffectHeal(uint32 i) // Heal
             int32 reduce = GetProto()->EffectDieSides[i] + 1;
             if (u_caster != nullptr)
             {
-                SM_FIValue(u_caster->SM_PJumpReduce, &reduce, GetProto()->SpellGroupType);
+                if (Player* p = u_caster->GetSpellModOwner())
+                    p->ApplySpellMod(GetProto()->Id, SPELLMOD_DAMAGE_MULTIPLIER, reduce, this);
             }
             chaindamage -= (reduce * chaindamage) / 100;
             Heal((int32)chaindamage);
@@ -3993,8 +3994,8 @@ void Spell::SpellEffectThreat(uint32 i) // Threat
 
     int32 amount = GetProto()->EffectBasePoints[i];
 
-    SM_FIValue(u_caster->SM_FMiscEffect, &amount, GetProto()->SpellGroupType);
-    SM_PIValue(u_caster->SM_PMiscEffect, &amount, GetProto()->SpellGroupType);
+    if (Player* p = u_caster->GetSpellModOwner())
+        p->ApplySpellMod(GetProto()->Id, SPELLMOD_ALL_EFFECTS, amount, this);
 
 
     bool chck = unitTarget->GetAIInterface()->modThreatByPtr(u_caster, amount);
@@ -4481,8 +4482,9 @@ void Spell::SpellEffectSelfResurrect(uint32 i)
         case 21169: //Reincarnation. Resurrect with 20% health and mana
         {
             int32 amt = 20;
-            SM_FIValue(unitTarget->SM_FMiscEffect, &amt, GetProto()->SpellGroupType);
-            SM_PIValue(unitTarget->SM_PMiscEffect, &amt, GetProto()->SpellGroupType);
+            if (Player* p = u_caster->GetSpellModOwner())
+                p->ApplySpellMod(GetProto()->Id, SPELLMOD_ALL_EFFECTS, amt, this);
+
             health = uint32((unitTarget->GetMaxHealth() * amt) / 100);
             mana = uint32((unitTarget->GetMaxPower(POWER_TYPE_MANA) * amt) / 100);
         }
@@ -4793,8 +4795,8 @@ void Spell::SpellEffectSummonDeadPet(uint32 i)
     Pet* pPet = p_caster->GetSummon();
     if (pPet)
     {
-        SM_FIValue(p_caster->SM_FMiscEffect, &damage, GetProto()->SpellGroupType);
-        SM_PIValue(p_caster->SM_PMiscEffect, &damage, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_ALL_EFFECTS, damage, this);
 
         pPet->SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0);
         pPet->SetHealth((uint32)((pPet->GetMaxHealth() * damage) / 100));
@@ -4811,8 +4813,8 @@ void Spell::SpellEffectSummonDeadPet(uint32 i)
         if (pPet == NULL)//no pets to Revive
             return;
 
-        SM_FIValue(p_caster->SM_FMiscEffect, &damage, GetProto()->SpellGroupType);
-        SM_PIValue(p_caster->SM_PMiscEffect, &damage, GetProto()->SpellGroupType);
+        if (Player* p = u_caster->GetSpellModOwner())
+            p->ApplySpellMod(GetProto()->Id, SPELLMOD_ALL_EFFECTS, damage, this);
 
         pPet->SetHealth((uint32)((pPet->GetMaxHealth() * damage) / 100));
     }
