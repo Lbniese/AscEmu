@@ -20,6 +20,7 @@
 #define _PLAYER_DEFINES_H
 
 #include "CommonTypes.hpp"
+#include "Util.h"
 
 #include <ctime>
 
@@ -640,7 +641,7 @@ enum SpellModType
 // Spell modifier (used for modify other spells)
 struct SpellModifier
 {
-    SpellModifier(Aura* _ownerAura = nullptr) : charges(0), ownerAura(_ownerAura) {}
+    SpellModifier(Aura* _ownerAura = NULL) : charges(0), ownerAura(_ownerAura) {}
     SpellModOp op : 8;
     SpellModType type : 8;
     int16 charges : 16;
