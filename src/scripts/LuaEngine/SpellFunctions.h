@@ -123,7 +123,7 @@ LuaSpellEntry luaSpellVars[] =
     { "StartRecoveryTime", 0, offsetof(SpellEntry, StartRecoveryTime) },
     { "MaxTargetLevel", 0, offsetof(SpellEntry, MaxTargetLevel) },
     { "SpellFamilyName", 0, offsetof(SpellEntry, SpellFamilyName) },
-    { "SpellGroupType", 0, offsetof(SpellEntry, SpellGroupType[0]) },
+    //{ "SpellGroupType", 0, offsetof(SpellEntry, SpellGroupType[0]) },
     { "MaxTargets", 0, offsetof(SpellEntry, MaxTargets) },
     { "Spell_Dmg_Type", 0, offsetof(SpellEntry, Spell_Dmg_Type) },
     { "PreventionType", 0, offsetof(SpellEntry, PreventionType) },
