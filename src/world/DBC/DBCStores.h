@@ -487,14 +487,14 @@ struct SpellEntry
     uint32 baseLevel;                                         // 38
     uint32 spellLevel;                                        // 39
     uint32 DurationIndex;                                     // 40
-    int32 powerType;                                         // 41
+    int32 powerType;                                          // 41
     uint32 manaCost;                                          // 42
     uint32 manaCostPerlevel;                                  // 43
     uint32 manaPerSecond;                                     // 44
     uint32 manaPerSecondPerLevel;                             // 45
     uint32 rangeIndex;                                        // 46
     float speed;                                              // 47
-    uint32 modalNextSpell;                                    // 48 comment this out
+    //uint32 modalNextSpell;                                  // 48
     uint32 maxstack;                                          // 49
     uint32 Totem[2];                                          // 50 - 51
     uint32 Reagent[8];                                        // 52 - 59 int32
@@ -546,11 +546,11 @@ struct SpellEntry
     uint32 MaxTargets;                                        // 212
     uint32 Spell_Dmg_Type;                                    // 213
     uint32 PreventionType;                                    // 214
-    int32 StanceBarOrder;                                     // 215  comment this out
+    //int32 StanceBarOrder;                                   // 215
     float dmg_multiplier[MAX_SPELL_EFFECTS];                  // 216 - 218
-    uint32 MinFactionID;                                      // 219  comment this out
-    uint32 MinReputation;                                     // 220  comment this out
-    uint32 RequiredAuraVision;                                // 221  comment this out
+    //uint32 MinFactionID;                                    // 219
+    //uint32 MinReputation;                                   // 220
+    //uint32 RequiredAuraVision;                              // 221
     uint32 TotemCategory[2];                                  // 222 - 223
     int32 RequiresAreaId;                                     // 224
     uint32 School;                                            // 225
@@ -779,10 +779,7 @@ struct SpellEntry
         MaxTargets = 0;
         Spell_Dmg_Type = 0;
         PreventionType = 0;
-        StanceBarOrder = 0;
-        MinFactionID = 0;
-        MinReputation = 0;
-        RequiredAuraVision = 0;
+
         RequiresAreaId = 0;
         School = 0;
         RuneCostID = 0;
@@ -809,7 +806,7 @@ struct SpellEntry
         manaPerSecondPerLevel = 0;
         rangeIndex = 0;
         speed = 0;
-        modalNextSpell = 0;
+
         maxstack = 0;
         EquippedItemClass = 0;
         EquippedItemSubClass = 0;

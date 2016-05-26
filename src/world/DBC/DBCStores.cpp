@@ -197,11 +197,11 @@ const char* spellentryFormat =
 "u" // MaxTargets
 "u" // Spell_Dmg_Type
 "u" // PreventionType
-"u" // StanceBarOrder
+"x" // StanceBarOrder
 "fff" // dmg_multiplier[3]
-"u" // MinFactionID
-"u" // MinReputation
-"u" // RequiredAuraVision
+"x" // MinFactionID
+"x" // MinReputation
+"x" // RequiredAuraVision
 "uu" // TotemCategory[2]
 "i" // RequiresAreaId
 "u" // School
