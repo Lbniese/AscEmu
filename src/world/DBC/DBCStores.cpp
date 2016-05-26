@@ -117,8 +117,7 @@ const char* spellentryFormat =
 "u" // AttributesExF
 "u" // AttributesExG
 "uu" // Stances[2]
-"u" // ShapeshiftExclude
-"x" // unk 3.2.0
+"uu" // StancesExcluded[2]
 "u" // Targets
 "u" // TargetCreatureType
 "u" // RequiresSpellFocus

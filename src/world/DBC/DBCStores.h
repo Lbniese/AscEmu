@@ -461,8 +461,7 @@ struct SpellEntry
     uint32 AttributesExF;                                     // 10
     uint32 AttributesExG;                                     // 11 
     uint32 Stances[2];                                        // 12-13
-    uint32 ShapeshiftExclude;                                 // 14 
-  //uint32 Unknown;                                           // 15 (14-15 StancesExcluded[2])
+    uint32 StancesExcluded[2];                                // 14-15
     uint32 Targets;                                           // 16
     uint32 TargetCreatureType;                                // 17
     uint32 RequiresSpellFocus;                                // 18
@@ -718,7 +717,8 @@ struct SpellEntry
         AttributesExG = 0;
         Stances[0] = 0;
         Stances[1] = 0;
-        ShapeshiftExclude = 0;
+        StancesExcluded[0] = 0;
+        StancesExcluded[1] = 0;
         Targets = 0;
         TargetCreatureType = 0;
         RequiresSpellFocus = 0;

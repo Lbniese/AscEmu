@@ -5812,7 +5812,7 @@ uint8 Spell::GetErrorAtShapeshiftedCast(SpellEntry* spellInfo, uint32 form)
 {
     uint32 stanceMask = (form ? DecimalToMask(form) : 0);
 
-    if (spellInfo->ShapeshiftExclude > 0 && spellInfo->ShapeshiftExclude & stanceMask)				// can explicitly not be casted in this stance
+    if (spellInfo->StancesExcluded[0] > 0 && spellInfo->StancesExcluded[0] & stanceMask)				// can explicitly not be casted in this stance
         return SPELL_FAILED_NOT_SHAPESHIFT;
 
     if (spellInfo->Stances[0] == 0 || spellInfo->Stances[0] & stanceMask)			// can explicitly be casted in this stance

@@ -48,7 +48,7 @@ LuaSpellEntry luaSpellVars[] =
     { "AttributesExF", 0, offsetof(SpellEntry, AttributesExF) },
     { "AttributesExG", 0, offsetof(SpellEntry, AttributesExG) },
     { "Stances_1", 0, offsetof(SpellEntry, Stances[0]) },
-    { "ShapeshiftExclude", 0, offsetof(SpellEntry, ShapeshiftExclude) },
+    { "StancesExcluded_1", 0, offsetof(SpellEntry, StancesExcluded[0]) },
     { "Targets", 0, offsetof(SpellEntry, Targets) },
     { "TargetCreatureType", 0, offsetof(SpellEntry, TargetCreatureType) },
     { "RequiresSpellFocus", 0, offsetof(SpellEntry, RequiresSpellFocus) },
