@@ -3893,7 +3893,7 @@ void Aura::SpellAuraModShapeshift(bool apply)
             m_target->RemoveAllAurasByRequiredShapeShift(DecimalToMask(mod->m_miscValue));
 
         if (m_target->IsCasting() && m_target->m_currentSpell && m_target->m_currentSpell->GetProto()
-            && (m_target->m_currentSpell->GetProto()->RequiredShapeShift & DecimalToMask(mod->m_miscValue)))
+            && (m_target->m_currentSpell->GetProto()->Stances[0] & DecimalToMask(mod->m_miscValue)))
             m_target->InterruptSpell();
 
         //execute before changing shape back

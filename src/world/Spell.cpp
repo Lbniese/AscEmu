@@ -1967,7 +1967,7 @@ void Spell::WriteCastResult(WorldPacket& data, Player* caster, uint32 spellInfo,
                 data << uint32(GetProto()->Totem[1]);
             break;
         case SPELL_FAILED_ONLY_SHAPESHIFT:
-            data << uint32(GetProto()->RequiredShapeShift);
+            data << uint32(GetProto()->Stances[0]);
             break;
         case SPELL_FAILED_CUSTOM_ERROR:
             data << uint32(extraError);
@@ -5815,7 +5815,7 @@ uint8 Spell::GetErrorAtShapeshiftedCast(SpellEntry* spellInfo, uint32 form)
     if (spellInfo->ShapeshiftExclude > 0 && spellInfo->ShapeshiftExclude & stanceMask)				// can explicitly not be casted in this stance
         return SPELL_FAILED_NOT_SHAPESHIFT;
 
-    if (spellInfo->RequiredShapeShift == 0 || spellInfo->RequiredShapeShift & stanceMask)			// can explicitly be casted in this stance
+    if (spellInfo->Stances[0] == 0 || spellInfo->Stances[0] & stanceMask)			// can explicitly be casted in this stance
         return 0;
 
     bool actAsShifted = false;
@@ -5858,7 +5858,7 @@ uint8 Spell::GetErrorAtShapeshiftedCast(SpellEntry* spellInfo, uint32 form)
     else
     {
         // Check if it even requires a shapeshift....
-        if (!hasAttributeExB(ATTRIBUTESEXB_NOT_NEED_SHAPESHIFT) && spellInfo->RequiredShapeShift != 0)
+        if (!hasAttributeExB(ATTRIBUTESEXB_NOT_NEED_SHAPESHIFT) && spellInfo->Stances[0] != 0)
             return SPELL_FAILED_ONLY_SHAPESHIFT;
     }
 

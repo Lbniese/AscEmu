@@ -4642,7 +4642,7 @@ void Unit::RemoveAllAurasByRequiredShapeShift(uint32 mask)
         if (aura == NULL || !aura->IsPositive())
             continue;
 
-        if (aura->GetSpellProto()->RequiredShapeShift & mask)
+        if (aura->GetSpellProto()->Stances[0] & mask)
             aura->Remove();
     }
 }

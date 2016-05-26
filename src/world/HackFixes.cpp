@@ -1469,7 +1469,7 @@ void ApplyNormalFixes()
             case 61684:     // Dash
             {
                 // mask for FORM_CAT(1) = 1 << (1 - 1), which is 1
-                sp->RequiredShapeShift = 1;
+                sp->Stances[0] = 1;
             } break;
             default:
                 break;
@@ -1612,15 +1612,15 @@ void ApplyNormalFixes()
     // Warrior - Tactical Mastery Rank 1
     sp = CheckAndReturnSpellEntry(12295);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0x00070000;
+        sp->Stances[0] = 0x00070000;
     // Warrior - Tactical Mastery Rank 2
     sp = CheckAndReturnSpellEntry(12676);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0x00070000;
+        sp->Stances[0] = 0x00070000;
     // Warrior - Tactical Mastery Rank 3
     sp = CheckAndReturnSpellEntry(12677);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0x00070000;
+        sp->Stances[0] = 0x00070000;
 
     // Warrior - Heroic Throw
     sp = CheckAndReturnSpellEntry(57755);
@@ -3685,24 +3685,24 @@ void ApplyNormalFixes()
     // Druid - Primal Fury (talent)
     sp = CheckAndReturnSpellEntry(37116);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
 
     sp = CheckAndReturnSpellEntry(37117);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
 
     // Druid - Predatory Strikes
     uint32 mm = DecimalToMask(FORM_BEAR) | DecimalToMask(FORM_DIREBEAR) | DecimalToMask(FORM_MOONKIN) | DecimalToMask(FORM_CAT);
 
     sp = CheckAndReturnSpellEntry(16972);
     if (sp != NULL)
-        sp->RequiredShapeShift = mm;
+        sp->Stances[0] = mm;
     sp = CheckAndReturnSpellEntry(16974);
     if (sp != NULL)
-        sp->RequiredShapeShift = mm;
+        sp->Stances[0] = mm;
     sp = CheckAndReturnSpellEntry(16975);
     if (sp != NULL)
-        sp->RequiredShapeShift = mm;
+        sp->Stances[0] = mm;
 
     ////////////////////////////////////////////////////////////
     // Restoration
@@ -4090,19 +4090,19 @@ void ApplyNormalFixes()
     //all Drums
     sp = CheckAndReturnSpellEntry(35474);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
     sp = CheckAndReturnSpellEntry(35475);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
     sp = CheckAndReturnSpellEntry(35476);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
     sp = CheckAndReturnSpellEntry(35477);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
     sp = CheckAndReturnSpellEntry(35478);
     if (sp != NULL)
-        sp->RequiredShapeShift = 0;
+        sp->Stances[0] = 0;
 
     //Purify helboar meat
     sp = CheckAndReturnSpellEntry(29200);

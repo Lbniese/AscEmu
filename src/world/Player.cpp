@@ -4344,7 +4344,7 @@ void Player::_ApplyItemMods(Item* item, int16 slot, bool apply, bool justdrokedo
 
             if (item->GetProto()->Spells[k].Trigger == ON_EQUIP)
             {
-                if (spells->RequiredShapeShift)
+                if (spells->Stances[0])
                 {
                     AddShapeShiftSpell(spells->Id);
                     continue;
@@ -4372,7 +4372,7 @@ void Player::_ApplyItemMods(Item* item, int16 slot, bool apply, bool justdrokedo
             if (item->GetProto()->Spells[k].Trigger == ON_EQUIP)
             {
                 SpellEntry* spells = dbcSpell.LookupEntry(item->GetProto()->Spells[k].Id);
-                if (spells->RequiredShapeShift)
+                if (spells->Stances[0])
                     RemoveShapeShiftSpell(spells->Id);
                 else
                     RemoveAura(item->GetProto()->Spells[k].Id);
@@ -9122,9 +9122,9 @@ void Player::CompleteLoading()
             && (info->Attributes & ATTRIBUTES_PASSIVE)  // passive
             && !(info->custom_c_is_flags & SPELL_FLAG_IS_EXPIREING_WITH_PET))
         {
-            if (info->RequiredShapeShift)
+            if (info->Stances[0])
             {
-                if (!(((uint32)1 << (GetShapeShift() - 1)) & info->RequiredShapeShift))
+                if (!(((uint32)1 << (GetShapeShift() - 1)) & info->Stances[0]))
                     continue;
             }
 
@@ -9624,7 +9624,7 @@ void Player::SetShapeShift(uint8 ss)
     {
         if (m_auras[x] != NULL)
         {
-            uint32 reqss = m_auras[x]->GetSpellProto()->RequiredShapeShift;
+            uint32 reqss = m_auras[x]->GetSpellProto()->Stances[0];
             if (reqss != 0 && m_auras[x]->IsPositive())
             {
                 if (old_ss > 0
@@ -9673,7 +9673,7 @@ void Player::SetShapeShift(uint8 ss)
         sp = dbcSpell.LookupEntry(*itr);
         if (sp->custom_apply_on_shapeshift_change || sp->Attributes & 64)        // passive/talent
         {
-            if (sp->RequiredShapeShift && ((uint32)1 << (ss - 1)) & sp->RequiredShapeShift)
+            if (sp->Stances[0] && ((uint32)1 << (ss - 1)) & sp->Stances[0])
             {
                 spe = sSpellFactoryMgr.NewSpell(this, sp, true, NULL);
                 spe->prepare(&t);
@@ -9698,7 +9698,7 @@ void Player::SetShapeShift(uint8 ss)
     for (itr = mShapeShiftSpells.begin(); itr != mShapeShiftSpells.end(); ++itr)
     {
         sp = dbcSpell.LookupEntry(*itr);
-        if (sp->RequiredShapeShift && ((uint32)1 << (ss - 1)) & sp->RequiredShapeShift)
+        if (sp->Stances[0] && ((uint32)1 << (ss - 1)) & sp->Stances[0])
         {
             spe = sSpellFactoryMgr.NewSpell(this, sp, true, NULL);
             spe->prepare(&t);
@@ -10951,7 +10951,7 @@ void Player::AddShapeShiftSpell(uint32 id)
     SpellEntry* sp = dbcSpell.LookupEntry(id);
     mShapeShiftSpells.insert(id);
 
-    if (sp->RequiredShapeShift && ((uint32)1 << (GetShapeShift() - 1)) & sp->RequiredShapeShift)
+    if (sp->Stances[0] && ((uint32)1 << (GetShapeShift() - 1)) & sp->Stances[0])
     {
         Spell* spe = sSpellFactoryMgr.NewSpell(this, sp, true, NULL);
         SpellCastTargets t(this->GetGUID());
@@ -12464,7 +12464,7 @@ void Player::LearnTalent(uint32 talentid, uint32 rank, bool isPreviewed)
                 spellInfo->Effect[2] == SPELL_EFFECT_LEARN_SPELL)
                 && ((spellInfo->custom_c_is_flags & SPELL_FLAG_IS_EXPIREING_WITH_PET) == 0 || ((spellInfo->custom_c_is_flags & SPELL_FLAG_IS_EXPIREING_WITH_PET) && GetSummon()))))
             {
-                if (spellInfo->RequiredShapeShift && !((uint32)1 << (GetShapeShift() - 1) & spellInfo->RequiredShapeShift))
+                if (spellInfo->Stances[0] && !((uint32)1 << (GetShapeShift() - 1) & spellInfo->Stances[0]))
                 {
                     // do nothing
                 }
