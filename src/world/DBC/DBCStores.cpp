@@ -150,7 +150,7 @@ const char* spellentryFormat =
 "u" // manaPerSecondPerLevel
 "u" // rangeIndex
 "f" // speed
-"u" // modalNextSpell
+"x" // modalNextSpell
 "u" // maxstack
 "uu" // Totem[2]
 "uuuuuuuu" // Reagent[8]
