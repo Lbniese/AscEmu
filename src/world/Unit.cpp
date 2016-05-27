@@ -5211,7 +5211,7 @@ bool Unit::HasAuraVisual(uint32 visualid)
 {
     //passive auras do not have visual (at least when code was written)
     for (uint32 x = MAX_REMOVABLE_AURAS_START; x < MAX_REMOVABLE_AURAS_END; x++)
-        if (m_auras[x] && m_auras[x]->GetSpellProto()->SpellVisual == visualid)
+        if (m_auras[x] && m_auras[x]->GetSpellProto()->SpellVisual[0] == visualid)
             return true;
     return false;
 }

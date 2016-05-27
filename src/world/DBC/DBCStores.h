@@ -520,8 +520,7 @@ struct SpellEntry
     uint32 EffectTriggerSpell[MAX_SPELL_EFFECTS];             // 116 - 118
     float EffectPointsPerComboPoint[MAX_SPELL_EFFECTS];       // 119 - 121
     uint32 EffectSpellClassMask[3][3];                        // 122 - 130
-    uint32 SpellVisual;                                       // 131
-    uint32 field114;                                          // 132 (131-132 SpellVisual[2])
+    uint32 SpellVisual[2];                                    // 131 - 132
     uint32 spellIconID;                                       // 133
     uint32 activeIconID;                                      // 134 activeIconID;
     uint32 spellPriority;                                     // 135
@@ -761,8 +760,8 @@ struct SpellEntry
         custom_is_ranged_spell = false;
 
         custom_SchoolMask = 0;
-        SpellVisual = 0;
-        field114 = 0;
+        SpellVisual[0] = 0;
+        SpellVisual[1] = 0;
         spellIconID = 0;
         activeIconID = 0;
         spellPriority = 0;

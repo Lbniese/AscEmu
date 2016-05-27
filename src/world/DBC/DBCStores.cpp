@@ -178,8 +178,7 @@ const char* spellentryFormat =
 "uuu" // EffectUnk0[3]
 "uuu" // EffectUnk1[3]
 "uuu" // EffectUnk2[3]
-"u" // SpellVisual
-"u" // field114
+"uu" // SpellVisual[2]
 "u" // spellIconID
 "u" // activeIconID
 "u" // spellPriority
