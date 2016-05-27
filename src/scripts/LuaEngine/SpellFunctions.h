@@ -114,7 +114,7 @@ LuaSpellEntry luaSpellVars[] =
     { "Name", 1, offsetof(SpellEntry, Name) },
     { "Rank", 1, offsetof(SpellEntry, Rank) },
     { "Description", 1, offsetof(SpellEntry, Description) },
-    { "BuffDescription", 1, offsetof(SpellEntry, BuffDescription) },
+    //{ "BuffDescription", 1, offsetof(SpellEntry, BuffDescription) },
     { "ManaCostPercentage", 0, offsetof(SpellEntry, ManaCostPercentage) },
     { "StartRecoveryCategory", 0, offsetof(SpellEntry, StartRecoveryCategory) },
     { "StartRecoveryTime", 0, offsetof(SpellEntry, StartRecoveryTime) },

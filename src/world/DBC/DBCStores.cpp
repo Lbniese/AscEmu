@@ -186,7 +186,7 @@ const char* spellentryFormat =
 "lxxxxxxxxxxxxxxxx" // Name
 "lxxxxxxxxxxxxxxxx" // Rank
 "lxxxxxxxxxxxxxxxx" // Description
-"lxxxxxxxxxxxxxxxx" // BuffDescription
+"xxxxxxxxxxxxxxxxx" // BuffDescription
 "u" // ManaCostPercentage
 "u" // unkflags
 "u" // StartRecoveryTime

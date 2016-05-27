@@ -534,8 +534,7 @@ struct SpellEntry
     char* Description;                                        // 170  comment this out
   //char* DescriptionAlt[15];                                 // 171 - 185 (170-185 Description[16])
   //uint32 DescriptionFlags;                                  // 186 not used
-    const char* BuffDescription;                              // 187  comment this out
-  //char* BuffDescription[15];                                // 188 - 202 (187-202 BuffDescription[16])
+    //char* BuffDescription[16];                              // 187-202
   //uint32 buffdescflags;                                     // 203 not used
     uint32 ManaCostPercentage;                                // 204
     uint32 StartRecoveryCategory;                             // 205
@@ -770,7 +769,7 @@ struct SpellEntry
         Name = nullptr;
         Rank = nullptr;
         Description = 0;
-        BuffDescription = 0;
+
         ManaCostPercentage = 0;
         StartRecoveryCategory = 0;
         StartRecoveryTime = 0;
